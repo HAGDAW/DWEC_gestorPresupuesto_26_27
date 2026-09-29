@@ -2,9 +2,21 @@
 
 // TODO: Variable global
 
+"use strict";
 
-function actualizarPresupuesto() {
-    // TODO
+let presupuesto = 0;
+
+function actualizarPresupuesto(valor)
+ {
+   let cantidad = Number(valor);
+
+   if(isNaN(cantidad) || cantidad < 0)
+   {
+    console.error("error, el presupuesto introducido no es válido");
+    return -1
+   }
+    presupuesto = cantidad;
+    return presupuesto
 }
 
 function mostrarPresupuesto() {

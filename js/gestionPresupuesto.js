@@ -20,11 +20,11 @@ function actualizarPresupuesto(valor)
 }
 
 function mostrarPresupuesto() {
-    // TODO
+    console.log("Tu presupuesto actual es de " + presupuesto + " €.");
 }
 
 function CrearGasto() {
-    // TODO
+
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.

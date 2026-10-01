@@ -20,11 +20,29 @@ function actualizarPresupuesto(valor)
 }
 
 function mostrarPresupuesto() {
-    console.log("Tu presupuesto actual es de " + presupuesto + " €.");
+    return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto() {
+function CrearGasto(descripcion, valor)
+{
+    let cantidad = Number(valor);
+    let valorFinal;
+    
+    if(cantidad <= 0 || isNaN(cantidad) )
+    {
+        valorFinal = 0;
+    }
+    else
+    {
+        valorFinal = cantidad;
+    }
 
+    let gasto = {
+        descripcion: descripcion,
+        valor: valorFinal
+    };
+
+    return gasto;
 }
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.

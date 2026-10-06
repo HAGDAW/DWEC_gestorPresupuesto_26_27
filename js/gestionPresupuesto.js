@@ -26,7 +26,7 @@ function mostrarPresupuesto() {
     return "Tu presupuesto actual es de " + presupuesto + " €";
 }
 
-function CrearGasto(descripcion, valor, fecha, etiquetas)
+function CrearGasto(descripcion, valor, fecha, ...etiquetas)
 {
     this.descripcion = descripcion;
     valor = Number(valor);
@@ -88,7 +88,47 @@ function CrearGasto(descripcion, valor, fecha, etiquetas)
             this.fecha = tiempoNuevo;
         }
     }
+    this.anyadirEtiquetas = function(...nuevasEtiquetas) {
+        for (let i = 0; i < nuevasEtiquetas.length; i++) {
+            {
+                if (!this.etiquetas.includes(nuevasEtiquetas[i]))
+                {
+                    this.etiquetas.push(nuevasEtiquetas[i]);
+                }
+            }
+        }
+    };
 
+    this.borrarEtiquetas = function(...etiquetasABorrar) 
+    {
+        for (let i = 0; i < etiquetasABorrar.length; i++)
+         {
+            let posicion = this.etiquetas.indexOf(etiquetasABorrar[i]);
+            if (posicion !== -1)
+            {
+                this.etiquetas.splice(posicion, 1);
+            }
+        }
+    };
+
+    this.mostrarGastoCompleto = function()
+    {
+        let fecha = new Date(this.fecha).toLocaleString('es-ES');
+
+        let texto = "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €.\n"
+        texto += "Fecha: " + fecha + "\n";
+        texto += "Etiquetas:\n"
+
+        for(let i = 0 ; i < this.etiquetas.length; i++)
+        {
+            texto += "- " + this.etiquetas[i] + "\n";
+        }
+        return texto;
+    }
+
+    if (etiquetas.length > 0) {
+        this.anyadirEtiquetas(...etiquetas);
+    }
 
 }
 
@@ -109,7 +149,7 @@ function borrarGasto(id)
 {
     for(let i = 0; i < gastos.length; i++)
     {
-        if(gastos.id === id)
+        if(gastos[i].id === id)
         {
             gastos.splice(i,1);
             break;
@@ -119,12 +159,17 @@ function borrarGasto(id)
 
 function calcularTotalGastos()
 {
-
+    let total = 0;
+    for(let i = 0; i < gastos.length; i++)
+    {
+        total+= gastos[i].valor;
+    }
+    return total;
 }
 
 function calcularBalance()
 {
-    
+    return presupuesto - calcularTotalGastos();
 }
 
 

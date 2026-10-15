@@ -130,6 +130,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
         this.anyadirEtiquetas(...etiquetas);
     }
 
+    let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
+    let gasto2 = new CrearGasto("Gasto 2", 27.55, "2021-11-24", "casa", "supermercado", "comida" );
+
+    gasto1.obtenerPeriodoAgrupacion("mes");
+    // Resultado: "2021-09"
+    gasto1.obtenerPeriodoAgrupacion("anyo");
+    // Resultado: "2021"
+    gasto1.obtenerPeriodoAgrupacion("dia");
+    // Resultado: "2021-09-06"
+
+    gasto2.obtenerPeriodoAgrupacion("mes");
+    // Resultado: "2021-11"
+    gasto2.obtenerPeriodoAgrupacion("anyo");
+    // Resultado: "2021"
+    gasto2.obtenerPeriodoAgrupacion("dia");
+    // Resultado: "2021-11-24"  
+
 }
 
 function listarGastos()
@@ -173,7 +190,77 @@ function calcularBalance()
 }
 
 
+function filtrarGastos(variables)
+{
+    let gastosFiltrados = gastos.filter(gasto =>
+    {
+        if(variables.fechaDesde !== undefined)
+        {
+            if(Date.parse(gasto.fecha) < Date.parse(gasto.fechaDesde))
+            {
+                return false;
+            }
 
+        }
+        if(variables.fechaHasta !== undefined)
+        {
+            if(Date.parse(gasto.fecha) < Date.parse(gasto.fechaHasta))
+            {
+                return false;
+            }
+        }
+        if(variables.valorMinimo !== undefined)
+        {
+            if(gasto.precio < variables.valorMinimo)
+            {
+                return false;
+            }
+        }
+        if(variables.valorMaximo !== undefined)
+        {
+            if(gasto.precio > variables.valorMaximo)
+            {
+                return false;
+            }
+        }
+        if(variables.descripcionContiene !== undefined)
+        {
+            let textoGasto = gasto.descripcionContiene.toLowerCase();
+            let textoVariable = variables.descripcionContiene.toLowerCase();
+
+            if(textoGasto.includes(textoVariable) === false)
+            {
+                return false;
+            }
+        }
+        if(variables.etiquetasTiene !== undefined)
+        {
+            let arrayEtiquetas = gasto.etiquetas.map(etiquetas => etiquetas.toLowerCase());
+
+            let contieneEtiqueta = variables.etiquetasTiene.some(etiquetaBuscada =>
+            {
+                let buscadaMinusculas = etiquetaBuscada.toLowerCase();
+
+                return arrayEtiquetas.includes(buscadaMinusculas);
+            }
+            )
+
+            if(contieneEtiqueta === false)
+            {
+            return false;
+            }
+        }
+        
+
+    }
+
+)
+}
+
+function agruparGastos()
+{
+
+}
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
 // Si al obtener el código de una práctica se genera un conflicto, por favor incluye todo el código que aparece aquí debajo
@@ -185,5 +272,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }

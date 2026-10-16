@@ -130,22 +130,23 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas)
         this.anyadirEtiquetas(...etiquetas);
     }
 
-    let gasto1 = new CrearGasto("Gasto 1", 23.55, "2021-09-06", "casa", "supermercado" );
-    let gasto2 = new CrearGasto("Gasto 2", 27.55, "2021-11-24", "casa", "supermercado", "comida" );
+   this.obtenerPeriodoAgrupacion = function(periodo)
+   {
+    let fechaTexto = new Date(this.fecha).toISOString();
 
-    gasto1.obtenerPeriodoAgrupacion("mes");
-    // Resultado: "2021-09"
-    gasto1.obtenerPeriodoAgrupacion("anyo");
-    // Resultado: "2021"
-    gasto1.obtenerPeriodoAgrupacion("dia");
-    // Resultado: "2021-09-06"
-
-    gasto2.obtenerPeriodoAgrupacion("mes");
-    // Resultado: "2021-11"
-    gasto2.obtenerPeriodoAgrupacion("anyo");
-    // Resultado: "2021"
-    gasto2.obtenerPeriodoAgrupacion("dia");
-    // Resultado: "2021-11-24"  
+    if(periodo === "anyo")
+    {
+        return fechaTexto.slice(0,4)
+    }
+    else if(periodo === "mes")
+    {
+        return fechaTexto.slice(0,7)
+    }
+    else if (periodo === "dia")
+    {
+        return fechaTexto.slice(0,10)
+    }
+   }
 
 }
 

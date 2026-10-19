@@ -197,36 +197,36 @@ function filtrarGastos(variables)
     {
         if(variables.fechaDesde !== undefined)
         {
-            if(Date.parse(gasto.fecha) < Date.parse(gasto.fechaDesde))
+            if(gasto.fecha < Date.parse(variables.fechaDesde))
             {
                 return false;
             }
-
         }
         if(variables.fechaHasta !== undefined)
         {
-            if(Date.parse(gasto.fecha) < Date.parse(gasto.fechaHasta))
+            
+            if(gasto.fecha > Date.parse(variables.fechaHasta))
             {
                 return false;
             }
         }
         if(variables.valorMinimo !== undefined)
         {
-            if(gasto.precio < variables.valorMinimo)
+            if(gasto.valor < variables.valorMinimo) 
             {
                 return false;
             }
         }
         if(variables.valorMaximo !== undefined)
         {
-            if(gasto.precio > variables.valorMaximo)
+            if(gasto.valor > variables.valorMaximo)
             {
                 return false;
             }
         }
         if(variables.descripcionContiene !== undefined)
         {
-            let textoGasto = gasto.descripcionContiene.toLowerCase();
+            let textoGasto = gasto.descripcion.toLowerCase();
             let textoVariable = variables.descripcionContiene.toLowerCase();
 
             if(textoGasto.includes(textoVariable) === false)
@@ -236,31 +236,59 @@ function filtrarGastos(variables)
         }
         if(variables.etiquetasTiene !== undefined)
         {
-            let arrayEtiquetas = gasto.etiquetas.map(etiquetas => etiquetas.toLowerCase());
+            if (variables.etiquetasTiene.length > 0)
+             {
+                let arrayEtiquetas = gasto.etiquetas.map(etiqueta => etiqueta.toLowerCase());
 
-            let contieneEtiqueta = variables.etiquetasTiene.some(etiquetaBuscada =>
-            {
-                let buscadaMinusculas = etiquetaBuscada.toLowerCase();
+                let contieneEtiqueta = variables.etiquetasTiene.some(etiquetaBuscada =>
+                {
+                    let buscadaMinusculas = etiquetaBuscada.toLowerCase();
+                    return arrayEtiquetas.includes(buscadaMinusculas);
+                });
 
-                return arrayEtiquetas.includes(buscadaMinusculas);
-            }
-            )
-
-            if(contieneEtiqueta === false)
-            {
-            return false;
+                if(contieneEtiqueta === false)
+                {
+                    return false;
+                }
             }
         }
         
-
-    }
-
-)
+        return true; 
+    }); 
+    
+    return gastosFiltrados;
 }
 
-function agruparGastos()
+function agruparGastos(periodo = "mes", etiquetas, fechaDesde, fechaHasta)
 {
+    let fechaMax = fechaHasta;
+    if(fechaHasta === undefined)
+        {
+            fechaMax = new Date().toISOString();
+        }
 
+    let reglas = {
+        fechaDesde: fechaDesde,
+        fechaHasta: fechaMax,
+        etiquetasTiene: etiquetas
+    }
+
+    let gastosFiltrados = filtrarGastos(reglas);
+
+    let gastosAgrupados = gastosFiltrados.reduce((acumulador, gasto) => {
+        
+        let nombrePagina = gasto.obtenerPeriodoAgrupacion(periodo);
+       
+    if(acumulador[nombrePagina] === undefined)
+    {
+        acumulador[nombrePagina] = 0;
+    }
+    acumulador[nombrePagina] = acumulador[nombrePagina] + gasto.valor;
+
+    return acumulador;
+
+},{});
+return gastosAgrupados
 }
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado

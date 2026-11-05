@@ -1,2 +1,1 @@
-import * as mostrarDatoEnId from "./gestionPresupuestoWeb";
-import * as mostrarGastoWeb from "./gestionPresupuestoWeb";
+import { mostrarDatoEnId, mostrarGastoWeb, mostrarGastosAgrupadosWeb } from "./gestionPresupuestoWeb";

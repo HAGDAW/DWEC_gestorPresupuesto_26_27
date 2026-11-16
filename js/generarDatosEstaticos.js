@@ -48,7 +48,7 @@ let gastosSept = logica.filtrarGastos(
     }
 
 
-let gastosMasDe50 = filtrarGastos({
+let gastosMasDe50 = logica.filtrarGastos({
     valorMinimo:50
 });
 
@@ -78,10 +78,10 @@ for(let i = 0; i < gastosEtiquetaOComidaMenos50.length; i++)
 }
 
 let agrupadosDia = logica.agruparGastos("dia");
-web.mostrarGastosAgrupadosWeb("agrupacion-dia",agrupadosDia,"dia");
+web.mostrarGastosAgrupadosWeb("agrupacion-dia",agrupadosDia,"día");
 
 let agrupadosMes = logica.agruparGastos("mes");
 web.mostrarGastosAgrupadosWeb("agrupacion-mes",agrupadosMes,"mes");
 
 let agrupadosAnyo = logica.agruparGastos("anyo");
-web.mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupadosAnyo,"anyo");
+web.mostrarGastosAgrupadosWeb("agrupacion-anyo",agrupadosAnyo,"año");

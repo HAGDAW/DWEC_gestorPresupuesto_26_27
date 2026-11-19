@@ -75,8 +75,21 @@ function repintar()
 
 }
 
+function actualizarPresupuestoWeb()
+{
+    let presupuestoSolicitado = prompt("Introduce el nuevo presupuesto: ");
+    presupuestoSolicitado = Number(presupuestoSolicitado);
+    logica.actualizarPresupuesto(presupuestoSolicitado);
+    repintar();
+}
+
+let handler = document.getElementById("actualizarpresupuesto")
+handler.addEventListener("click",actualizarPresupuestoWeb)
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,    
-    mostrarGastosAgrupadosWeb
+    mostrarGastosAgrupadosWeb,
+    repintar,
+    actualizarPresupuestoWeb
 }

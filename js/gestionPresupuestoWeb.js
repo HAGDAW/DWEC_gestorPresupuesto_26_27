@@ -102,6 +102,24 @@ function nuevoGastoWeb()
 let handlerGastoWeb = document.getElementById("anyadirgasto")
 handlerGastoWeb.addEventListener("click", nuevoGastoWeb)
 
+function EditarHandle()
+{
+    this.handleEvent = function(evento)
+    {
+        let descripcion = prompt("Introduce descripción: ", this.gasto.descripcion)
+        let valor = prompt("Introduce valor: ", this.gasto.valor)
+        valor = Number(valor)
+        let fecha = prompt("Introduce fecha: ",new Date(this.gasto.fecha).toISOString().slice(0,10))
+        let etiquetas = prompt("Introduce etiquetas: ", this.gasto.etiquetas.join(","))
+        etiquetas = etiquetas.split(",")
+
+       this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+    }
+}
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,    

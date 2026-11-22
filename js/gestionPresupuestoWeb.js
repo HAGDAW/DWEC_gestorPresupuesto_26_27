@@ -113,13 +113,21 @@ function EditarHandle()
         let etiquetas = prompt("Introduce etiquetas: ", this.gasto.etiquetas.join(","))
         etiquetas = etiquetas.split(",")
 
-       this.gasto.actualizarDescripcion(descripcion);
+        this.gasto.actualizarDescripcion(descripcion);
         this.gasto.actualizarValor(valor);
         this.gasto.actualizarFecha(fecha);
         this.gasto.anyadirEtiquetas(...etiquetas);
     }
 }
 
+function BorrarHandle()
+{
+    this.handleEvent = function(event)
+    {
+        logica.borrarGasto(this.gasto.id)
+        repintar();
+    }
+}
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,    

@@ -86,10 +86,27 @@ function actualizarPresupuestoWeb()
 let handler = document.getElementById("actualizarpresupuesto")
 handler.addEventListener("click",actualizarPresupuestoWeb)
 
+function nuevoGastoWeb()
+{
+    let descripcion = prompt("Introduce descripción: ")
+    let valor = prompt("Introduce valor: ")
+    valor = Number(valor);
+    let fecha = prompt("Introduce fecha: ")
+    let etiquetas = prompt("Introduce etiquetas: ")
+    etiquetas = etiquetas.split(",")
+
+    let gastoWeb = new logica.CrearGasto(descripcion,valor, fecha, ...etiquetas)
+    logica.anyadirGasto(gastoWeb);
+    repintar();
+}
+let handlerGastoWeb = document.getElementById("anyadirgasto")
+handlerGastoWeb.addEventListener("click", nuevoGastoWeb)
+
 export{
     mostrarDatoEnId,
     mostrarGastoWeb,    
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb,
 }
